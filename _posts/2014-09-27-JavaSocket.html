@@ -1,0 +1,200 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>J-chung.github.com by J-Chung</title>
+
+    <link rel="stylesheet" href="../stylesheets/styles.css">
+    <link rel="stylesheet" href="../stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]--><p></p>
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h2>J-chung.github.io</h2>
+        <p></p>
+
+        <p class="view"><a href="https://github.com/J-Chung">欢迎访问我的 github</a></p>
+		<br/><br/>
+
+      </header>
+      <div id="content">
+      <section>
+
+      <h3>简单介绍一下Java 里的 Server socket，并给出下列一个小实例。</h3>
+      <p>
+        socket服务端，可做的内容如下： 
+
+        1）根据与客户端约定好的数据格式，例如：数据的前4位代表userName，5-8位代表客户端请求服务端的methodName。等等，提供相应服务。 
+
+        2）可以根据socket服务端机器的能力强弱，控制线程池大小。并提供实时的服务器链接数，从而让客户端用户能够选择压力较小的服务器进行链接。提供稳定流畅的服务。 
+
+        3）可自己封装一个java.net.Socket类MySocket，在其对象里放入一个唯一标志例如客服端传递过来userName，进而实现一个userName，同时只能一个点连接上服务端。 
+      </p>
+      <h4>Server类</h4>
+      <pre><code>package server;
+
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class Server {
+
+  private static final int PORT = 12345;// 监听端口号
+
+  /**
+   * @param args
+   */
+  public static void main(String[] args) {
+    System.out.println("服务器启动...\n");
+    Server server = new Server();
+    server.init();
+  }
+
+  @SuppressWarnings("resource")
+  public void init() {
+    try {
+      ServerSocket socket = new ServerSocket(PORT);
+      while (true) {
+        // 一旦有堵塞, 则表示服务器与客户端获得了连接
+        Socket client = socket.accept();
+        // 处理这次连接
+        new HandlerThread(client);
+      }
+    } catch (IOException e) {
+      System.out.println("服务器异常: " + e.getMessage());
+    }
+  }
+
+  private class HandlerThread implements Runnable {
+
+    private Socket socket;
+
+    public HandlerThread(Socket client) {
+      socket = client;
+      new Thread(this).start();
+    }
+
+    @Override
+    public void run() {
+      try {
+        DataInputStream dataInputStream = new DataInputStream(
+            socket.getInputStream());
+        String clientInputStr = dataInputStream.readUTF();// 这里要注意和客户端输出流的写方法对应,否则会抛
+                                  // EOFException
+        // 处理客户端数据
+        System.out.println("客户端发过来的内容：" + clientInputStr);
+        // 向客户端回复信息
+        DataOutputStream dataOutputStream = new DataOutputStream(
+            socket.getOutputStream());
+        System.out.println("请输入：\t");
+        // 发送键盘输入的一行
+        String str = new BufferedReader(
+            new InputStreamReader(System.in)).readLine();
+        dataOutputStream.writeUTF(str);
+
+        dataOutputStream.close();
+        dataInputStream.close();
+      } catch (IOException e) {
+        System.out.println("服务器 run 异常: " + e.getMessage());
+      } finally {
+        if (socket != null) {
+          try {
+            socket.close();
+          } catch (Exception e) {
+            socket = null;
+            System.out.println("服务端 finally 异常:" + e.getMessage());
+          }
+        }
+      }
+
+    }
+
+  }
+
+}
+</code></pre>
+<br/><br/>
+<h4>client类</h4>
+<pre><code>package server;
+
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Socket;
+
+public class Client {
+  public static final String IP_ADDR = "localhost";//服务器地址
+  public static final int PORT = 12345;//服务器端口号
+
+  public static void main(String[] args) {
+    System.out.println("客户端启动...");
+    System.out.println("当接收到服务器端字符为 \"OK\" 的时候, 客户端将终止\n");
+    while (true) {
+      Socket socket = null;
+
+      try {
+        // 创建一个流套接字并将其连接到指定主机上的指定端口号
+        socket = new Socket(IP_ADDR, PORT);
+
+        // 读取服务器端数据
+        DataInputStream dataInputStream = new DataInputStream(
+            socket.getInputStream());
+        // 向服务器端发送数据
+        DataOutputStream dataOutputStream = new DataOutputStream(
+            socket.getOutputStream());
+        System.out.println("请输入：\t");
+        String str = new BufferedReader(
+            new InputStreamReader(System.in)).readLine();
+        dataOutputStream.writeUTF(str);
+
+        String ret = dataInputStream.readUTF();
+        System.out.println("服务器端返回过来的是: " + ret);
+
+        // 如果接收到的是OK的话则断开
+        if ("OK".equals(ret)) {
+          System.out.println("客户端将关闭连接");
+          Thread.sleep(5000);
+          break;
+        }
+
+        dataOutputStream.close();
+        dataInputStream.close();
+
+      } catch (Exception e) {
+        System.out.println("客户端异常:" + e.getMessage());
+      } finally {
+        if (socket != null) {
+          try {
+            socket.close();
+          } catch (IOException e) {
+            socket = null;
+            System.out.println("客户端 finally 异常:" + e.getMessage());
+          }
+        }
+      }
+    }
+  }
+}
+</code></pre>
+
+      </section>
+      </div>
+      <footer>
+       <small>作者：John</small><br/><small>联系方式：thejcfreebird@gmail.com</small>
+      </footer>
+    </div>
+    <script src="../javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
