@@ -13,5 +13,9 @@ function gestureStart() {
     if (metas[i].name == "viewport") {
       metas[i].content = "width=device-width, minimum-scale=0.25, maximum-scale=1.6";
     }
-  }
+  }class_name.prototype.method_name = function(first_argument) {
+    // body...
+  };.prototype.method_name = function(first_argument) {
+    // body...
+  };
 }
