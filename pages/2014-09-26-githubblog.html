@@ -1,0 +1,149 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>J-chung.github.com by J-Chung</title>
+
+    <link rel="stylesheet" href="../stylesheets/styles.css">
+    <link rel="stylesheet" href="../stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]--><p></p>
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h2>J-chung.github.io</h2>
+        <p></p>
+
+        <p class="view"><a href="https://github.com/J-Chung">欢迎访问我的 github</a></p>
+		<br/><br/>
+        <h4>目录</h4>
+        <p><small><a href="">我的github-blog</a></small></p>
+
+        <div id="list"></div>
+
+      </header>
+      <div id="content">
+      <section>
+        <h3>
+<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>我的github-blog</h3>
+
+<p>之前，用过WordPress等集成环境搭建blog，感觉不好，不要太臃肿。使用github+jekyll搭建blog，简约和轻巧，感觉不要太好。</p>
+<img src="../pictures/jekyll-github.png">
+
+<h3>
+<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>1、jekyll介绍</h3>
+Jekyll是一个静态站点生成器，它会根据网页源码生成静态文件。它提供了模板、变量、插件等功能，可以用来生成整个网站。<br/>
+Jekyll生成的站点，可以直接发布到github上面，这样我们就有了一个免费的，无限流量的，有人维护的属于我们的自己的web网站。Jekyll是基于Ruby的程序，可以通过gem来下载安装。<br/>
+Jekyll官方文档：<a href="http://jekyllrb.com/">http://jekyllrb.com/</a> 
+Jekyll的目录介绍
+<p></p>
+<pre><code>|-- _config.yml
+|-- _includes
+|-- _layouts
+|   |-- default.html
+|   `-- post.html
+|-- _posts
+|   |-- 2007-10-29-why-every-programmer-should-play-nethack.textile
+|   `-- 2009-04-26-barcamp-boston-4-roundup.textile
+|-- _site
+`-- index.html</code></pre>
+<p></p>
+简单介绍一下作用：
+<p></p>
+
+<h4>_config.yml</h4>
+
+配置文件，用来定义你想要的效果，设置之后就不用关心了。
+
+<h4>_includes</h4>
+
+可以用来存放一些小的可复用的模块，方便通过{ % include file.ext %}（去掉前两个{中或者{与%中的空格，下同）灵活的调用。这条命令会调用_includes/file.ext文件。
+
+<h4>_layouts</h4>
+
+这是模板文件存放的位置。模板需要通过YAML front matter来定义，后面会讲到，{ { content }}标记用来将数据插入到这些模板中来。
+
+<h4>_posts</h4>
+
+你的动态内容，一般来说就是你的博客正文存放的文件夹。他的命名有严格的规定，必须是2012-02-22-artical-title.MARKUP这样的形式，MARKUP是你所使用标记语言的文件后缀名，根据_config.yml中设定的链接规则，可以根据你的文件名灵活调整，文章的日期和标记语言后缀与文章的标题的独立的。
+<p></p>
+
+<h3>
+<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>2、创建github仓库</h3>
+
+<p>首先得在github官网上有账号，相信小伙伴们都会有的！然后在github创建一个创库，以[username].github.com命名，注意的是这里的[username],要和你的github账号的username一致，然后clone到本地</p>
+
+<h3>
+<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>3、安装ruby</h3>
+
+<p>由于jekyll是以ruby为基，现在我们从官网下载rubyinstaller-2.0.0-p576-x64.exe<a href=" http://rubyinstaller.org/downloads/"> http://rubyinstaller.org/downloads/</a></p>
+<p>安装完ruby，再安装gem</p>
+<pre><code>~ D:\workspace\ruby>ruby --version
+ruby 2.0.0p247 (2013-06-27) [x64-mingw32]
+
+~ D:\workspace\ruby>gem update --system
+Updating rubygems-update
+Fetching: rubygems-update-2.1.10.gem (100%)
+Successfully installed rubygems-update-2.1.10
+Parsing documentation for rubygems-update-2.1.10
+Installing ri documentation for rubygems-update-2.1.10
+Installing darkfish documentation for rubygems-update-2.1.10
+Installing RubyGems 2.1.10
+RubyGems 2.1.10 installed
+Parsing documentation for rubygems-2.1.10
+Installing ri documentation for rubygems-2.1.10
+</code></pre>
+
+<h3>
+<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>4、安装Devkit</h3>
+<p>下载DevKit-mingw64-64-4.7.2-20130224-1432-sfx.exe：<a href="http://rubyinstaller.org/downloads/"></a> http://rubyinstaller.org/downloads/</p>
+
+<h3>
+<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>5、安装Jekyll</h3>
+<p>运行Devkit目录下msys.bat，打开ruby命令行，再安装jekll</p>
+<pre><code>$ gem install jekyll
+</code></pre>
+
+<h3>
+<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>6、用Jekyll bootstrap模板</h3>
+<p>打开clone在本地的仓库的shell命令行</p>
+<pre><code>$ git clone https://github.com/plusjade/jekyll-bootstrap.git jekyll
+</code></pre>
+<p>切换到clone在本地仓库的目录下，启动jekyll服务器</p>
+<pre><code>$ jekyll serve
+Configuration file: d:/workspace/ruby/jekyll/_config.yml
+            Source: d:/workspace/ruby/jekyll
+       Destination: d:/workspace/ruby/jekyll/_site
+      Generating... done.
+    Server address: http://0.0.0.0:4000
+  Server running... press ctrl-c to stop.</code></pre>
+<p>打开浏览器，http://localhost:4000/</p>
+<img src="./pictures/jekyll-bootstrap-web.png">
+
+<h3>
+<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>7、发布</h3>
+<p>修改文件_config.yml</p>
+<pre><code>~ vi _config.yml
+
+production_url : http://bsspirit.github.io
+BASE_PATH : /jekyll-demo</code></pre>
+<p>访问你的项目仓库，点击settings</p>
+<img src="../pictures/setpath.png">
+<p>选择你的主题，publish page</p>
+<img src="../pictures/publishpage.png">
+<p>发布到github上之后，等待十分钟。访问[username].github.io就能看的你的主页啦！</p>
+
+      </section>
+      </div>
+      <footer>
+       <small>作者：John</small><br/><small>联系方式：thejcfreebird@gmail.com</small>
+      </footer>
+    </div>
+    <script src="../javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
