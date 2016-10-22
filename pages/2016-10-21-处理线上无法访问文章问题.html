@@ -1,0 +1,45 @@
+  <!doctype html>
+  <html>
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="chrome=1">
+      <title>J-chung.github.com by J-Chung</title>
+      <link rel="stylesheet" href="../stylesheets/styles.css">
+      <link rel="stylesheet" href="../stylesheets/pygment_trac.css">
+      <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    </head>
+    <body>
+      <div class="wrapper">
+
+        <header>
+          <h2>J-chung.github.io</h2>
+          <a href="https://github.com/J-Chung"><img src="../pictures/github-logo.jpg">My github</a> 
+        </header>
+       
+        <div id="content">
+        <section>
+          <h3>处理线上无法访问文章问题</h3>
+          <p>笔者之前用github+jekyll做博客，本机可以访问链接。而代码提交到github后无法访问，困扰多时，给出之前的链接形式：</p>
+          <pre><code>./pages/2016-10-21-NewPage.html</code></pre>
+          <p>很多网上帖子在原 _posts 目录下创建静态，但是笔者线上无法访问。于是更改目录：</p>
+          <code><pre>
+j-chuang.github.io
+  | ...
+  | pages
+    | 2016-10-21-处理线上无法访问文章问题.html</pre>
+          </code>
+          <p>index.html</p>
+          <pre><code>./pages/2016-10-21-处理线上无法访问连接问题.html"</code></pre>
+          <p>提交代码后均可访问，所以笔者认为。还是多多尝试，也感谢默默写帖的大神</p>
+        </section>
+        </div>
+       
+        <footer>
+         <small>作者：John</small><br/><small>联系方式：thejcfreebird@gmail.com</small>
+        </footer>
+      </div>
+
+      <script src="../javascripts/scale.fix.js"></script>
+    
+    </body>
+  </html>
