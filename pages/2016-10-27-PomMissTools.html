@@ -1,0 +1,71 @@
+  <!doctype html>
+  <html>
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="chrome=1">
+      <title>J-chung.github.com by J-Chung</title>
+      <link rel="stylesheet" href="../stylesheets/styles.css">
+      <link rel="stylesheet" href="../stylesheets/pygment_trac.css">
+      <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    </head>
+    <body>
+      <div class="wrapper">
+
+        <header>
+          <h2>J-chung.github.io</h2>
+          <a href="https://github.com/J-Chung"><img src="../pictures/github-logo.jpg">My github</a> 
+        </header>
+       
+        <div id="content">
+        <section>
+          <h3>Maven pom.xml Error Missing artifact jdk.tools:jdk.tools:jar:1.x</h3>
+          <p>笔者在引入HadoopMapReduce相关maven依赖时Problems提示:</p>
+          <pre><code>Missing artifact jdk.tools:jdk.tools:jar.1.x</code></pre>
+          <p>因为Hadoop需要tools.jar,网上有教程中可能未提到,当然这些随处可以百度到解决方法。</p>
+          <p>添加依赖:</p>
+          <pre>
+<code>&lt;dependency&gt;
+	&lt;groupId&gt;jdk.tools&lt;/groupId&gt;
+	&lt;artifactId&gt;jdk.tools&lt;/artifactId&gt;
+	&lt;version&gt;1.7&lt;/version&gt;
+	&lt;scope&gt;system&lt;/scope&gt;
+	&lt;systemPath&gt;${JAVA_HOME}/lib/tools.jar&lt;/systemPath&gt;
+&lt;/dependency></code>	
+		 </pre>
+          <p>引入的Hadoop MapReduce相关依赖</p>
+          <pre>
+<code>&lt;dependency&gt;
+	&lt;groupId&gt;org.apache.hadoop&lt;/groupId&gt;
+	&lt;artifactId&gt;hadoop-hdfs&lt;/artifactId&gt;
+	&lt;version&gt;2.7.2&lt;/version&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+	&lt;groupId&gt;org.apache.hadoop&lt;/groupId&gt;
+	&lt;artifactId&gt;hadoop-common&lt;/artifactId&gt;
+	&lt;version&gt;2.7.2&lt;/version&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+	&lt;groupId&gt;org.apache.hadoop&lt;/groupId&gt;
+	&lt;artifactId&gt;hadoop-mapreduce-client-common&lt;/artifactId&gt;
+	&lt;version&gt;2.7.2&lt;/version&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+	&lt;groupId&gt;org.apache.hadoop&lt;/groupId&gt;
+	&lt;artifactId&gt;hadoop-mapreduce-client-core&lt;/artifactId&gt;
+	&lt;version&gt;2.7.2&lt;/version&gt;
+&lt;/dependency&gt;</code>
+          </pre>
+        </section>
+        </div>
+        <footer>
+         <small>作者：John</small><br/><small>联系方式：thejcfreebird@gmail.com</small>
+        </footer>
+      </div>
+
+      <script src="../javascripts/scale.fix.js"></script>
+    
+    </body>
+  </html>
